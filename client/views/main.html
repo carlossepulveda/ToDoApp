@@ -8,13 +8,14 @@
     <button type="button" class="btn btn-primary" ng-click="setFilter('dueDate')">Due Date</button>
   </div>
   <div class="col-md-6">
-      Due
+      Overdue
     <table class="table">
-      <tr><td>name</td><td>priority</td><td>dueDate</td></tr>
+      <tr><td><b>name</b></td><td><b>priority</b></td><td><b>dueDate</b></td></tr>
       <tr ng-repeat="task in dueTasks | orderBy: filter" style="color: red">
         <td>{{ task.name }}</td>
         <td>{{ task.priority }}</td>
         <td>{{ task.dueDate }}</td>
+        <td><div style="cursor:pointer" ng-click="deleteDueTask($index)">Delete</div></td>
       </tr>
     </table>
   </div>
@@ -22,11 +23,12 @@
   <div class="col-md-6">
     Pending
     <table class="table">
-      <tr><td>name</td><td>priority</td><td>dueDate</td></tr>
+      <tr><td><b>name</b></td><td><b>priority</b></td><td><b>dueDate</b></td></tr>
       <tr ng-repeat="task in pendingTasks | orderBy: filter">
         <td>{{ task.name }}</td>
         <td>{{ task.priority }}</td>
         <td>{{ task.dueDate }}</td>
+        <td><div style="cursor:pointer" ng-click="deletePendingTask($index)">Delete</div></td>
       </tr>
     </table>
   </div>

@@ -60,5 +60,19 @@ angular.module('toDoTaskApp')
         filters[filter] = !filters[filter];
       }
 
+      $scope.deleteDueTask = function(idx) {
+        var task = $scope.dueTasks[idx];
+        Service.deleteTask({id : task.id}, {}, function() {
+          $scope.dueTasks.splice(idx, 1);
+        }, onError);
+      }
+
+      $scope.deletePendingTask = function(idx) {
+        var task = $scope.pendingTasks[idx];
+        Service.deleteTask({id : task.id}, {}, function() {
+          $scope.pendingTasks.splice(idx, 1);
+        }, onError);
+      }
+
       Service.getTasks({}, getTaskSuccess, onError);
   }]);
