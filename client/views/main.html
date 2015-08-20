@@ -1,0 +1,35 @@
+<div class="jumbotron">
+
+<div>
+  <input ng-model="newTask.name" placeholder="name"/>
+  <input ng-model="newTask.priority" placeholder="priority"/>
+  <input ng-model="newTask.dueDate" placeholder="dueDate"/>
+  <button type="button" class="btn btn-primary" style="margin-bottom:2em" ng-click="saveTask(newTask)">Add task</button>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+      Due
+    <table class="table">
+      <tr><td>name</td><td>priority</td><td>dueDate</td></tr>
+      <tr ng-repeat="task in dueTasks">
+        <td>{{ task.name }}</td>
+        <td>{{ task.priority }}</td>
+        <td>{{ task.dueDate }}</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="col-md-6">
+    Pending
+    <table class="table">
+      <tr><td>name</td><td>priority</td><td>dueDate</td></tr>
+      <tr ng-repeat="task in pendingTasks">
+        <td>{{ task.name }}</td>
+        <td>{{ task.priority }}</td>
+        <td>{{ task.dueDate }}</td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
