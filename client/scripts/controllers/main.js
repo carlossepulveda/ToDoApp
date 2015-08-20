@@ -41,6 +41,7 @@ angular.module('toDoTaskApp')
 
       function onCreatedTask(task) {
         addTask(task);
+        $scope.newTask = {};
       }
 
       Service.getTasks({}, getTaskSuccess, onError);
