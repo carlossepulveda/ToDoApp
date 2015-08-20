@@ -5,7 +5,8 @@
   "main": "app/server.js",
   "dependencies": {
     "express": ">= 1.2.0",
-    "request": "^2.61.0"
+    "request": "^2.61.0",
+    "node-uuid" : "*"
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha --reporter spec"
