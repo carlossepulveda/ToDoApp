@@ -9,7 +9,7 @@ var TaskController = function (app) {
 function register(app) {
 
     app.get("/task",function(req,res,next){
-        res.send([]);
+        res.send(global.tasks);
     });
 
     app.post("/task/create",function(req,res,next){
