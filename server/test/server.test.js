@@ -73,4 +73,35 @@ describe("ToDoList API", function() {
     });
   });
 
+  describe("Update tasks", function() {
+
+    it("returns status 500", function(done) {
+      var url = "http://localhost:3001/task/update?id=some";
+      request({method : 'POST', uri : url}, function(error, response, body) {
+        expect(response.statusCode).to.equal(500);
+        done();
+      });
+    });
+
+    it("returns status 200", function(done) {
+
+      var url = "http://localhost:3001/task/create?name=carlos&dueDate=2015-03-12&priority=3";
+      request.post({ method: 'POST', uri: url}, function(error, response, body) {
+          var task = JSON.parse(body);
+          var id = task.id;
+
+          var updateURL = "http://localhost:3001/task/update?id=" + id + "&name=otro&priority=4&dueDate=2015-03-12";
+          request({ method: 'POST', uri: updateURL}, function(error, response, body) {
+            expect(response.statusCode).to.equal(200);
+            var updateTask = JSON.parse(body);
+            expect(updateTask.name).to.equal('otro');
+            expect(updateTask.priority).to.equal('4');
+            expect(updateTask.dueDate).to.equal('2015-03-12');
+            done();
+          });
+      });
+
+    });
+  });
+
 });

@@ -33,6 +33,14 @@ function register(app) {
         });
     });
 
+    app.post("/task/update",function(req,res,next){
+        updateTask(req.query, function(task) {
+            res.send(task);
+        }, function(error) {
+            res.status(500).send(error);
+        });
+    });
+
 }
 
 function listTasks() {
@@ -51,6 +59,31 @@ function createTask(data, onSuccess, onError) {
 
     var task = saveTask(data);
     onSuccess(task);
+}
+
+function updateTask(data, onSuccess, onError) {
+    var response = { "errors" : []}
+
+    var validationResponse = validateData(data, response);
+    if (Object.keys(validationResponse.ValidationError).length > 0) {
+        response.errors.push(validationResponse);
+        onError(response);
+        return;
+    }
+
+    var index = getTaskIndex(data.id);
+    if (index != -1) {
+        var task = global.tasks[index];
+        task.name = data.name;
+        task.priority = data.priority;
+        task.dueDate = data.dueDate;
+        task.updatedAt = new Date();
+        global.tasks[index] = task;
+        onSuccess(task);
+    } else {
+        onError({ "validationErrors": "No id provided." });
+    }
+    
 }
 
 function validateData(data) {
@@ -142,5 +175,15 @@ function deleteTask_(id) {
     return task;
 }
 
+function getTaskIndex(id) {
+    for (var i in global.tasks) {
+        var task = global.tasks[i];
+        if (task.id = id) {
+            return i;
+        }
+    }
+
+    return -1;
+}
 
 module.exports = TaskController;
