@@ -1,4 +1,5 @@
 var path = require('path');
+var uuid = require('node-uuid');
 
 var TaskController = function (app) {
     this.app = app;
@@ -16,6 +17,19 @@ function register(app) {
             res.send(task);
         }, function(error) {
             res.status(500).send(error);
+        });
+    });
+
+    app.get("/task/destroy", function(req, res, next) {
+        res.status(400).send({"status": 400, "validationErrors": "No id provided."});
+    });
+
+    app.get("/task/destroy/:id",function(req,res,next){
+        var id = req.params.id;
+        deleteTask(id, function(task) {
+            res.send(task);
+        }, function(error) {
+            res.status(404).send(error);
         });
     });
 
@@ -97,10 +111,36 @@ function saveTask(data) {
         dueDate : data.dueDate,
         priority : data.priority,
         createdAt : new Date(),
-        id : global.tasks.length
+        id : uuid.v1()
     };
 
     global.tasks.push(task);
     return task;
 }
+
+function deleteTask(id, onSuccess, onError) {
+    var task = deleteTask_(id);
+    if (!task) {
+        onError({ "validationErrors": "No id provided." });
+    } else {
+        onSuccess(task);        
+    }
+
+}
+
+function deleteTask_(id) {
+    var index = -1;
+    for (var i in global.tasks) {
+        var task = global.tasks[i];
+        if (task.id = id) {
+            index = i;
+        }
+    }
+
+    var task = global.tasks[i];
+    global.tasks.splice(index, 1);
+    return task;
+}
+
+
 module.exports = TaskController;

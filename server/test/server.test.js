@@ -38,11 +38,39 @@ describe("ToDoList API", function() {
         expect(body.name).to.equal('carlos');
         expect(body.dueDate).to.equal('2015-03-12');
         expect(body.priority).to.equal('3');
-        expect(body.id).to.equal(0);
         done();
       });
     });
 
+  });
+
+  describe("Delete tasks", function() {
+
+    it("returns status 400", function(done) {
+      var url = "http://localhost:3001/task/destroy";
+      request(url, function(error, response, body) {
+        expect(response.statusCode).to.equal(400);
+        done();
+      });
+    });
+
+    it("returns status 400", function(done) {
+
+      var url = "http://localhost:3001/task/create?name=carlos&dueDate=2015-03-12&priority=3";
+      request.post({ method: 'POST', uri: url}, function(error, response, body) {
+          var task = JSON.parse(body);
+          var id = task.id;
+
+          var destroyURL = "http://localhost:3001/task/destroy/" + task.id;
+          request(destroyURL, function(error, response, body) {
+            expect(response.statusCode).to.equal(200);
+            var deletedTask = JSON.parse(body);
+            expect(deletedTask.id).to.equal(task.id);
+            done();
+          });
+      });
+
+    });
   });
 
 });
