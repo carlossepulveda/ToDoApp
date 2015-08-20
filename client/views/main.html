@@ -1,11 +1,17 @@
 <div class="jumbotron">
 
 <div class="row">
+  <p>Order by:</p>
+  <div class="col-md-12" style="padding-bottom:3em">
+    <button type="button" class="btn btn-primary" ng-click="setFilter('name')">Name</button>
+    <button type="button" class="btn btn-primary" ng-click="setFilter('priority')">Priority</button>
+    <button type="button" class="btn btn-primary" ng-click="setFilter('dueDate')">Due Date</button>
+  </div>
   <div class="col-md-6">
       Due
     <table class="table">
       <tr><td>name</td><td>priority</td><td>dueDate</td></tr>
-      <tr ng-repeat="task in dueTasks" style="color: red">
+      <tr ng-repeat="task in dueTasks | orderBy: filter" style="color: red">
         <td>{{ task.name }}</td>
         <td>{{ task.priority }}</td>
         <td>{{ task.dueDate }}</td>
@@ -17,7 +23,7 @@
     Pending
     <table class="table">
       <tr><td>name</td><td>priority</td><td>dueDate</td></tr>
-      <tr ng-repeat="task in pendingTasks">
+      <tr ng-repeat="task in pendingTasks | orderBy: filter">
         <td>{{ task.name }}</td>
         <td>{{ task.priority }}</td>
         <td>{{ task.dueDate }}</td>

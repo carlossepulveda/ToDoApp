@@ -10,6 +10,13 @@
 angular.module('toDoTaskApp')
   .controller('MainCtrl',['$scope', 'Service', function ($scope, Service) {
 
+      $scope.filter = '+name'
+      var filters = {
+        'name' : true,
+        'dueDate' : true,
+        'priority' : true
+      }
+
       $scope.pendingTasks = [];
       $scope.dueTasks = [];
       function getTaskSuccess(data) {
@@ -42,6 +49,15 @@ angular.module('toDoTaskApp')
       function onCreatedTask(task) {
         addTask(task);
         $scope.newTask = {};
+      }
+
+      $scope.setFilter = function(filter) {
+        if (filters[filter]) {
+          $scope.filter = '-' + filter;
+        } else {
+          $scope.filter = '+' + filter;
+        }
+        filters[filter] = !filters[filter];
       }
 
       Service.getTasks({}, getTaskSuccess, onError);
