@@ -3,6 +3,7 @@ var express = require("express");
 var TaskController = require('./controllers/TaskController.js');
 
 global.appDir = __dirname;
+global.tasks = [];
 
 var app = express();
 
