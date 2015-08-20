@@ -1,18 +1,11 @@
 <div class="jumbotron">
 
-<div>
-  <input ng-model="newTask.name" placeholder="name"/>
-  <input ng-model="newTask.priority" placeholder="priority"/>
-  <input ng-model="newTask.dueDate" placeholder="dueDate"/>
-  <button type="button" class="btn btn-primary" style="margin-bottom:2em" ng-click="saveTask(newTask)">Add task</button>
-</div>
-
 <div class="row">
   <div class="col-md-6">
       Due
     <table class="table">
       <tr><td>name</td><td>priority</td><td>dueDate</td></tr>
-      <tr ng-repeat="task in dueTasks">
+      <tr ng-repeat="task in dueTasks" style="color: red">
         <td>{{ task.name }}</td>
         <td>{{ task.priority }}</td>
         <td>{{ task.dueDate }}</td>
@@ -32,4 +25,20 @@
     </table>
   </div>
 </div>
+
+<div class="form" style="margin-top:4em">
+  <div class="form-group col-xs-3">
+    <label>Name:</label>
+    <input class="form-control" ng-model="newTask.name" placeholder="name"/>
+  </div>
+  <div class="form-group col-xs-3">
+    <label>Priority:</label>
+    <input class="form-control" ng-model="newTask.priority" placeholder="priority"/>
+  </div>
+  <div class="form-group col-xs-3">
+    <label>DueDate:</label>
+    <input class="form-control" ng-model="newTask.dueDate" placeholder="2015-08-27"/>
+  </div>
+  <button type="button" class="btn btn-primary" style="margin-bottom:2em" ng-click="saveTask(newTask)">Add task</button>
 </div>
+
